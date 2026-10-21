@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #24342b;
+  background: #f5f7f2;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --ink: #24342b;
+  --muted: #7e8b81;
+  --line: #e6ebe3;
+  --forest: #315b45;
+  --forest-dark: #234332;
+  --lime: #d6f17a;
+  --cream: #f5f7f2;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; background: var(--cream); }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+::selection { background: #d6f17a; color: #24342b; }
+.glass { background: rgba(255,255,255,.78); backdrop-filter: blur(18px); }
+.soft-shadow { box-shadow: 0 14px 44px rgba(39, 60, 44, .055); }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.sidebar-scroll::-webkit-scrollbar { width: 4px; }
+.sidebar-scroll::-webkit-scrollbar-thumb { background: #dce4d9; border-radius: 99px; }
+.recharts-cartesian-grid-horizontal line { stroke: #edf0ea; }
+.recharts-text { fill: #8b978e; font-family: 'DM Sans', sans-serif; font-size: 11px; }
