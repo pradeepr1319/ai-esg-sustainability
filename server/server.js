@@ -9,9 +9,16 @@ import targetsRouter from './routes/targets.js'
 import insightsRouter from './routes/insights.js'
 
 const app = express()
+let dbConnection
+
 app.use(helmet())
 app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173' }))
 app.use(express.json({ limit: '1mb' }))
+app.use(async (req, res, next) => {
+  dbConnection ||= connectDB()
+  await dbConnection
+  next()
+})
 app.use('/api/', rateLimit({ windowMs: 60_000, limit: 120, standardHeaders: true, legacyHeaders: false }))
 app.get('/api/health', (req, res) => res.json({ ok: true, service: 'Verdant ESG API', database: process.env.MONGODB_URI ? 'configured' : 'demo mode' }))
 app.use('/api/metrics', metricsRouter)
@@ -23,6 +30,9 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Unexpected server error' })
 })
 
-const port = Number(process.env.PORT || 5000)
-await connectDB()
-app.listen(port, () => console.log(`Verdant API listening on http://localhost:${port}`))
+if (!process.env.VERCEL) {
+  const port = Number(process.env.PORT || 5000)
+  app.listen(port, () => console.log(`Verdant API listening on http://localhost:${port}`))
+}
+
+export default app
